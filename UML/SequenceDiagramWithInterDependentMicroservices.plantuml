@@ -1,0 +1,30 @@
+@startuml
+actor Frontend
+participant "Dependent Microservices Spring Boot \n(DTO/Controller/Service/Repository/Entity)" as DependentSpringBoot
+participant "InDependent Microservices Spring Boot \n(DTO/Controller/Service/Repository/Entity)" as InDependentSpringBoot
+database "N Base de données" as NDB
+
+Frontend -> DependentSpringBoot : requête\n(données utilisateur)
+DependentSpringBoot -> DependentSpringBoot : Prépare les données utilisateur (JSON to DTO)
+DependentSpringBoot -> DependentSpringBoot : Logique métier (calcul, vérification, mapping/conversion DTO to JSON, etc.)
+DependentSpringBoot -> InDependentSpringBoot : Valide et envoie la requête\n(UserData en JSON)
+InDependentSpringBoot -> InDependentSpringBoot : Valide et traite la requête (UserData from JSON to DTO)
+InDependentSpringBoot -> InDependentSpringBoot : Logique métier (calcul, vérification, mapping/conversion DTO to ENTITY, etc.)
+InDependentSpringBoot -> NDB : Lecture des données et mapping \n(JPA/ORM)
+NDB --> InDependentSpringBoot : Résultat (données ENTITY to DTO, confirmation)
+InDependentSpringBoot -> DependentSpringBoot : Résultat (JSON from DTO)
+DependentSpringBoot -> DependentSpringBoot : Valide et traite la requête (Result from JSON to DTO)
+DependentSpringBoot -> DependentSpringBoot : Logique métier (calcul, vérification, mapping/conversion DTO to ENTITY, etc.)
+DependentSpringBoot -> NDB : Lecture des données et mapping\n(JPA/ORM)
+NDB --> DependentSpringBoot : Résultat (données ENTITY to DTO, confirmation)
+DependentSpringBoot -> Frontend : (UserData en JSON from DTO)
+
+' Légende (optionnelle)
+legend right
+  <b>DTO</b> : Data Transfer Object
+  <b>JSON</b> : JavaScript Object Notation
+  <b>ORM</b> : Object Relational Mapping
+  <b>JPA</b> : Java Persistence API
+endlegend
+
+@enduml

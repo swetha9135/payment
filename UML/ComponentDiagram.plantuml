@@ -1,0 +1,25 @@
+@startuml
+skinparam componentStyle rectangle
+
+' Composants principaux
+component "Frontend Web/App" as Frontend {
+  [UI/UX]
+  [Appels API REST]
+}
+
+component "Microservices Spring Boot" as SpringBoot {
+  [DTO]
+  [Controller]
+  [Service]
+  [Repository]
+  [Entity]
+}
+
+database "Base de données" as DB
+
+' Relations
+Frontend -[#blue]-> SpringBoot : [1-n] - API REST
+SpringBoot -[#blue]-> SpringBoot : [n-n] - API REST
+SpringBoot -[#green]-> DB : [(n microservice dupliqué)-1] - JPA/ORM
+
+@enduml

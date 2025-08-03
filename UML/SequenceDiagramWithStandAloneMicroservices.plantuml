@@ -1,0 +1,21 @@
+@startuml
+actor Frontend
+participant "StandAlone Microservices Spring Boot \n(DTO/Controller/Service/Repository/Entity)" as SpringBoot
+database "Base de données" as DB
+
+Frontend -> SpringBoot : GET/POST/PUT/PATCH/DELETE /pathRestController \n(données utilisateur)
+SpringBoot -> SpringBoot : Valide la requête
+SpringBoot -> SpringBoot : Logique métier (calcul, vérification, mapping/conversion DTO to ENTITY, etc.)
+SpringBoot -> DB : Lecture/écriture des données\n(JPA/ORM)
+DB --> SpringBoot : Résultat (données ENTITY to DTO, confirmation)
+SpringBoot -> Frontend : DTO (JSON from DTO)
+
+' Légende (optionnelle)
+legend right
+  <b>DTO</b> : Data Transfer Object
+  <b>JSON</b> : JavaScript Object Notation
+  <b>ORM</b> : Object Relational Mapping
+  <b>JPA</b> : Java Persistence API
+endlegend
+
+@enduml
