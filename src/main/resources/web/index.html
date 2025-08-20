@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre SASU - Vente en Gros</title>
+    <!-- Tailwind CSS CDN pour un style rapide et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuration de la police Inter -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<!-- Message box personnalisé pour éviter les alertes -->
+<div id="message-box" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+    <div class="bg-white p-6 rounded-lg shadow-xl text-center max-w-sm">
+        <p id="message-content" class="text-lg font-medium mb-4"></p>
+        <button onclick="document.getElementById('message-box').classList.add('hidden')" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Fermer</button>
+    </div>
+</div>
+
+<!-- En-tête de la page -->
+<header class="bg-white shadow-md sticky top-0 z-40">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+        <h1 class="text-2xl font-bold text-blue-600">Votre SASU</h1>
+        <nav class="hidden md:flex items-center space-x-6">
+            <a href="#produits" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Produits</a>
+            <a href="#apropos" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">À Propos</a>
+            <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
+            <div class="flex items-center space-x-2">
+                <span class="text-sm text-gray-500">Affichage :</span>
+                <button id="price-toggle" class="bg-gray-200 text-gray-700 font-bold py-1 px-3 rounded-full transition-colors hover:bg-gray-300">
+                    Pro
+                </button>
+            </div>
+        </nav>
+        <!-- Bouton pour la version mobile -->
+        <button id="menu-button" class="md:hidden text-gray-600 hover:text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+    </div>
+</header>
+
+<!-- Menu mobile -->
+<div id="mobile-menu" class="fixed inset-0 bg-white z-30 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <div class="p-6">
+        <button id="close-menu" class="absolute top-4 right-4 text-gray-600 hover:text-blue-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <nav class="flex flex-col space-y-4 text-center mt-10">
+            <a href="#produits" class="text-gray-800 hover:text-blue-600 font-semibold text-lg transition-colors">Produits</a>
+            <a href="#apropos" class="text-gray-800 hover:text-blue-600 font-semibold text-lg transition-colors">À Propos</a>
+            <a href="#contact" class="text-gray-800 hover:text-blue-600 font-semibold text-lg transition-colors">Contact</a>
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <span class="text-sm text-gray-500">Affichage :</span>
+                <button id="price-toggle-mobile" class="mt-2 bg-gray-200 text-gray-700 font-bold py-1 px-3 rounded-full transition-colors hover:bg-gray-300">
+                    Pro
+                </button>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!-- Section principale de la vitrine -->
+<main class="container mx-auto px-6 py-12">
+
+    <!-- Bannière d'introduction -->
+    <section class="bg-white p-8 md:p-12 rounded-xl shadow-lg text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Votre partenaire pour l'approvisionnement en gros</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Découvrez notre catalogue complet de produits d'hypermarché, disponibles en semi-gros et gros. Des prix compétitifs pour les professionnels et les particuliers.
+        </p>
+        <a href="#produits" class="mt-6 inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-700">
+            Découvrir nos produits
+        </a>
+    </section>
+
+    <!-- Section des produits -->
+    <section id="produits" class="mb-12">
+        <h3 class="text-3xl font-bold text-gray-900 mb-8 text-center">Notre Catalogue</h3>
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Les cartes produits seront générées ici par JavaScript -->
+        </div>
+    </section>
+
+    <!-- Section À Propos -->
+    <section id="apropos" class="bg-white p-8 md:p-12 rounded-xl shadow-lg mb-12">
+        <h3 class="text-3xl font-bold text-gray-900 mb-6">À Propos de Nous</h3>
+        <p class="text-gray-700 leading-relaxed">
+            Forts de notre expérience dans la vente en gros, nous nous engageons à fournir des produits de qualité à des prix imbattables. Nous servons une clientèle variée, des professionnels cherchant un approvisionnement fiable aux particuliers désirant acheter en plus grande quantité. Nos multiples entrepôts à travers la France nous permettent de vous offrir un service logistique rapide et efficace.
+        </p>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="bg-gray-200 p-8 md:p-12 rounded-xl shadow-lg text-center">
+        <h3 class="text-3xl font-bold text-gray-900 mb-6">Contactez-nous</h3>
+        <p class="text-gray-700 mb-6">
+            Pour toute question ou demande de devis, n'hésitez pas à nous contacter.
+        </p>
+        <div class="space-y-4">
+            <p><strong>Adresse Principale :</strong> 123 Rue de la Logistique, 75000 Paris, France</p>
+            <p><strong>Téléphone :</strong> +33 1 23 45 67 89</p>
+            <p><strong>Email :</strong> contact@votresasu.com</p>
+        </div>
+        <a href="mailto:contact@votresasu.com" class="mt-6 inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-700">
+            Envoyer un email
+        </a>
+    </section>
+
+</main>
+
+<!-- Pied de page -->
+<footer class="bg-gray-800 text-white py-6 mt-12">
+    <div class="container mx-auto px-6 text-center">
+        <p>&copy; 2025 Votre SASU. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<!-- JavaScript pour la gestion des produits et l'interaction -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const productsGrid = document.getElementById('products-grid');
+        const priceToggle = document.getElementById('price-toggle');
+        const priceToggleMobile = document.getElementById('price-toggle-mobile');
+        let isPro = false; // État par défaut: affichage pour les particuliers
+
+        // Données de produits d'hypermarché simulées
+        const products = [
+            { id: 1, name: 'Pack de Lait UHT', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Lait+UHT', pricePro: 20.50, priceRegular: 24.60 },
+            { id: 2, name: 'Carton de Pâtes', image: 'https://placehold.co/400x300/e2e8f0/000000?text=P%C3%A2tes', pricePro: 15.00, priceRegular: 18.00 },
+            { id: 3, name: 'Boîte de Thon', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Thon+en+conserve', pricePro: 35.75, priceRegular: 42.90 },
+            { id: 4, name: 'Lot de Sodas', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Sodas', pricePro: 45.00, priceRegular: 54.00 },
+            { id: 5, name: 'Jus de fruits', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Jus+de+fruits', pricePro: 28.00, priceRegular: 33.60 },
+            { id: 6, name: 'Paquet de café', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Caf%C3%A9', pricePro: 50.00, priceRegular: 60.00 },
+            { id: 7, name: 'Pack d\'eau minérale', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Eau+min%C3%A9rale', pricePro: 18.00, priceRegular: 21.60 },
+            { id: 8, name: 'Lot de riz', image: 'https://placehold.co/400x300/e2e8f0/000000?text=Riz', pricePro: 22.00, priceRegular: 26.40 },
+        ];
+
+        // Fonction pour afficher le message box personnalisé
+        const showMessage = (message) => {
+            document.getElementById('message-content').textContent = message;
+            document.getElementById('message-box').classList.remove('hidden');
+        };
+
+        // Fonction pour générer une carte produit
+        const createProductCard = (product) => {
+            const card = document.createElement('div');
+            card.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'overflow-hidden', 'transition-all', 'hover:shadow-xl');
+
+            // Affichage du prix en fonction de l'état (Pro ou Particulier)
+            const priceValue = isPro ? product.pricePro : product.priceRegular;
+            const priceLabel = isPro ? 'Prix Pro HT' : 'Prix TTC';
+
+            card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">${product.name}</h4>
+                        <p class="text-2xl font-bold text-blue-600 mb-4">${priceValue.toFixed(2)} €</p>
+                        <p class="text-sm text-gray-500 mb-4">${priceLabel}</p>
+                        <button class="add-to-cart-btn bg-blue-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105 hover:bg-blue-700" data-product-id="${product.id}">
+                            Commander
+                        </button>
+                    </div>
+                `;
+            return card;
+        };
+
+        // Fonction pour mettre à jour l'affichage de tous les produits
+        const renderProducts = () => {
+            productsGrid.innerHTML = '';
+            products.forEach(product => {
+                productsGrid.appendChild(createProductCard(product));
+            });
+        };
+
+        // Gestionnaire d'événement pour le bouton d'affichage des prix
+        const togglePriceDisplay = () => {
+            isPro = !isPro;
+            if (isPro) {
+                priceToggle.textContent = 'Particulier';
+                priceToggleMobile.textContent = 'Particulier';
+                showMessage('Affichage pour les professionnels (Prix HT).');
+            } else {
+                priceToggle.textContent = 'Pro';
+                priceToggleMobile.textContent = 'Pro';
+                showMessage('Affichage pour les particuliers (Prix TTC).');
+            }
+            renderProducts(); // Re-rend l'ensemble des produits
+        };
+
+        // Écouteurs d'événements pour les boutons
+        priceToggle.addEventListener('click', togglePriceDisplay);
+        priceToggleMobile.addEventListener('click', togglePriceDisplay);
+
+        // Gérer le clic sur les boutons "Commander"
+        productsGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const productId = e.target.dataset.productId;
+                const product = products.find(p => p.id == productId);
+                showMessage(`"${product.name}" a été ajouté à votre panier de commande.`);
+            }
+        });
+
+        // Menu mobile
+        const mobileMenu = document.getElementById('mobile-menu');
+        document.getElementById('menu-button').addEventListener('click', () => {
+            mobileMenu.classList.remove('-translate-x-full');
+        });
+        document.getElementById('close-menu').addEventListener('click', () => {
+            mobileMenu.classList.add('-translate-x-full');
+        });
+
+        // Rendre les produits au chargement initial
+        renderProducts();
+    });
+</script>
+
+</body>
+</html>
